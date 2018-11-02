@@ -34,7 +34,7 @@ class PizzasController < ApplicationController
   private
 
   def pizza_params
-    params.permit(:price, :name, :ingredients, :toppings, :category_id)
+    params.permit(:price, :name, :ingredients, :category_id)
   end
 
   def set_category
