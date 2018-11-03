@@ -16,7 +16,7 @@ class OrdersController < ApplicationController
 
   # /post(buy a pizza)
   def create
-    @order = Order.create!(order_params)
+    @order = current_user.orders.create!(order_params)
     json_response(@order, :created)
   end
 
@@ -35,14 +35,14 @@ class OrdersController < ApplicationController
   private
 
   def order_params
-    params.permit(:quantity, :status, :pizza_id)
+    params.permit(:quantity, :status, :pizza_id, :users_id)
   end
 
   def set_order
-    @order = Order.find(params[:id])
+    @order = @pizza.orders.find_by!(id: params[:id]) if @pizza
   end
 
   def set_pizza
-    @pizza = @pizza.orders.find_by!(id: params[:id]) if @pizza
+    @pizza = Pizza.find(params[:pizza_id])
   end
 end
