@@ -1,13 +1,11 @@
 class ApplicationController < ActionController::API
+  include AuthToken
   include Response
-  include ExceptionHandler
 
-  before_action :authorize_request
-  attr_reader :current_user
+  protected
 
-  private
-
-  def authorize_request
-    @current_user = AuthorizeApiRequest.new(request.headers).call[:user]
+  def verify_jwt_token
+    head :unauthorized if request.headers['Authorization'].nil? ||
+                          !AuthToken.valid?(request.headers['Authorization'].split(' ').last)
   end
 end

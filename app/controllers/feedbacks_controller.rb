@@ -1,4 +1,8 @@
 class FeedbacksController < ApplicationController
+  before_action :verify_jwt_token
+
+  before_action :set_feedback
+  before_action :set_user
 
   def index
     @feedbacks = Feedback.all
@@ -16,6 +20,10 @@ class FeedbacksController < ApplicationController
   end
 
   def set_feedback
-    @feedback = Feedback.find(params[:id])
+    @feedback = @user.feedbacks.find_by!(id: params[:id]) if @user
+  end
+
+  def set_user
+    @user = User.find(id: params[:user_id])
   end
 end

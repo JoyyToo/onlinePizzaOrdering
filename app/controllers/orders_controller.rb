@@ -1,6 +1,8 @@
 class OrdersController < ApplicationController
-  before_action :set_pizza
+  before_action :set_user, except: %I[index]
+  before_action :set_pizza, except: %I[index]
   before_action :set_order, only: %i[show update destroy]
+  before_action :verify_jwt_token
 
   # /get
   def index
@@ -16,7 +18,7 @@ class OrdersController < ApplicationController
 
   # /post(buy a pizza)
   def create
-    @order = current_user.orders.create!(order_params)
+    @order = Order.create!(order_params)
     json_response(@order, :created)
   end
 
@@ -35,7 +37,7 @@ class OrdersController < ApplicationController
   private
 
   def order_params
-    params.permit(:quantity, :status, :pizza_id, :users_id)
+    params.permit(:quantity, :status, :pizza_id, :user_id)
   end
 
   def set_order
@@ -43,6 +45,11 @@ class OrdersController < ApplicationController
   end
 
   def set_pizza
-    @pizza = Pizza.find(params[:pizza_id])
+    @pizza = @user.pizzas.find_by!(id: params[:id]) if @user
+  end
+
+  def set_user
+    @user = User.find_by!(params[:user_id])
+    byebug
   end
 end

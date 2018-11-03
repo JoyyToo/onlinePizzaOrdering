@@ -1,7 +1,7 @@
 class PizzasController < ApplicationController
   before_action :set_category
   before_action :set_pizza, only: %i[show update destroy]
-  skip_before_action :authorize_request, only: %i[index]
+  before_action :verify_jwt_token, except: %i[index]
 
   # /get
   def index
@@ -22,7 +22,7 @@ class PizzasController < ApplicationController
 
   # /put
   def update
-    @pizza.update(pizza_params)
+    @pizza.update!(pizza_params)
     head :no_content
   end
 
