@@ -24,7 +24,7 @@ class CategoriesController < ApplicationController
 
   def destroy
     @category.destroy
-    head :no_content
+    json_response(Message.deleted.to_json)
   end
 
   private

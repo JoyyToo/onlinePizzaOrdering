@@ -7,8 +7,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @user = User.create!(register_params)
     if @user.save
       json_response(@user)
-    else
-      json_response(@user.errors)
     end
   end
 

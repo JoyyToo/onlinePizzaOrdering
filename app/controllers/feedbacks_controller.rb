@@ -15,6 +15,8 @@ class FeedbacksController < ApplicationController
     json_response(response, :created)
   end
 
+  private
+
   def feedback_params
     params.permit(:comment, :user_id)
   end

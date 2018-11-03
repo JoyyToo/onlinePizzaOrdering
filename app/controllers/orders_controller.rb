@@ -25,13 +25,13 @@ class OrdersController < ApplicationController
   # /put
   def update
     @order = @order.update(params.permit(:status))
-    head :no_content
+    json_response(Message.updated.to_json)
   end
 
   # /delete
   def destroy
     @order.destroy
-    head :no_content
+    json_response(Message.deleted.to_json)
   end
 
   private
@@ -50,6 +50,5 @@ class OrdersController < ApplicationController
 
   def set_user
     @user = User.find_by!(params[:user_id])
-    byebug
   end
 end

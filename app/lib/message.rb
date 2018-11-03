@@ -19,10 +19,6 @@ class Message
     'Unauthorized request'
   end
 
-  def self.account_created
-    'Account created successfully'
-  end
-
   def self.account_not_created
     'Account could not be created'
   end
@@ -33,5 +29,13 @@ class Message
 
   def self.feedback_submitted
     'Your feedback has been submitted'
+  end
+
+  def self.deleted
+    'Successfully deleted'
+  end
+
+  def self.updated
+    'Successfully updated'
   end
 end

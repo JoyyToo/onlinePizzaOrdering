@@ -23,13 +23,13 @@ class PizzasController < ApplicationController
   # /put
   def update
     @pizza.update!(pizza_params)
-    head :no_content
+    json_response(Message.updated.to_json)
   end
 
   # /delete
   def destroy
     @pizza.destroy
-    head :no_content
+    json_response(Message.deleted.to_json)
   end
 
   private

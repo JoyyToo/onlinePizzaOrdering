@@ -5,7 +5,10 @@ class ApplicationController < ActionController::API
   protected
 
   def verify_jwt_token
-    head :unauthorized if request.headers['Authorization'].nil? ||
-                          !AuthToken.valid?(request.headers['Authorization'].split(' ').last)
+    if request.headers['Authorization'].nil? || !AuthToken.valid?(
+      request.headers['Authorization'].split(' ').last
+    )
+      json_response(Message.missing_token.to_json, :unauthorized)
+    end
   end
 end
