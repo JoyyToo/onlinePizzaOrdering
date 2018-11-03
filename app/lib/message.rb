@@ -30,4 +30,8 @@ class Message
   def self.expired_token
     'Sorry, your token has expired. Please login to continue.'
   end
+
+  def self.feedback_submitted
+    'Your feedback has been submitted'
+  end
 end
