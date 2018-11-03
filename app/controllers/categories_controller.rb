@@ -1,5 +1,6 @@
 class CategoriesController < ApplicationController
   before_action :set_category, only: %i[show destroy]
+  skip_before_action :authorize_request, only: %i[all_pizzas index]
 
   def index
     @categories = Category.all

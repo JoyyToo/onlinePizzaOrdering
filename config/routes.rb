@@ -10,5 +10,8 @@ Rails.application.routes.draw do
   get 'orders', to: 'orders#index'
   put 'orders/:id', to: 'orders#update'
 
+  post 'auth/login', to: 'authentication#authenticate'
+  post 'signup', to: 'users#create'
+
   root to: 'categories#all_pizzas'
 end

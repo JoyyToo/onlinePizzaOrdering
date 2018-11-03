@@ -1,6 +1,7 @@
 class PizzasController < ApplicationController
   before_action :set_category
   before_action :set_pizza, only: %i[show update destroy]
+  skip_before_action :authorize_request, only: %i[index]
 
   # /get
   def index
