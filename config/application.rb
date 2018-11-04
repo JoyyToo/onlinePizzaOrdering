@@ -24,7 +24,8 @@ module OnlinePizza
       allow do
         origins '*'
         resource '*', headers: :any, methods: :any
-        en
+      end
+    end
 
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.2
