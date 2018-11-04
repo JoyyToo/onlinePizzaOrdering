@@ -1,8 +1,7 @@
 class FeedbacksController < ApplicationController
   before_action :verify_jwt_token
 
-  before_action :set_feedback
-  before_action :set_user
+  before_action :set_user, only: [:create]
 
   def index
     @feedbacks = Feedback.all
@@ -10,7 +9,7 @@ class FeedbacksController < ApplicationController
   end
 
   def create
-    @feedback = current_user.feedbacks.create!(feedback_params)
+    @feedback = Feedback.create!(feedback_params)
     response = { message: Message.feedback_submitted }
     json_response(response, :created)
   end
@@ -21,11 +20,7 @@ class FeedbacksController < ApplicationController
     params.permit(:comment, :user_id)
   end
 
-  def set_feedback
-    @feedback = @user.feedbacks.find_by!(id: params[:id]) if @user
-  end
-
   def set_user
-    @user = User.find(id: params[:user_id])
+    @user = User.find(params[:user_id])
   end
 end

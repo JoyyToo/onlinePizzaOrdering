@@ -5,8 +5,13 @@ Rails.application.routes.draw do
   }
   resources :categories do
     resources :pizzas do
+      resources :cart
       resources :orders
     end
+  end
+
+  resources :user do
+    resources :feedbacks
   end
 
   get 'pizzas', to: 'categories#all_pizzas'
@@ -15,7 +20,8 @@ Rails.application.routes.draw do
   put 'orders/:id', to: 'orders#update'
 
   get 'feedback', to: 'feedbacks#index'
-  post 'feedback', to: 'feedbacks#create'
+
+  get 'cart', to: 'cart#index'
 
   root to: 'categories#all_pizzas'
 end

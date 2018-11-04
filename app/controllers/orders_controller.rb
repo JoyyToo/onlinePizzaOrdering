@@ -1,12 +1,12 @@
 class OrdersController < ApplicationController
+  before_action :verify_jwt_token
   before_action :set_user, except: %I[index]
   before_action :set_pizza, except: %I[index]
   before_action :set_order, only: %i[show update destroy]
-  before_action :verify_jwt_token
 
   # /get
   def index
-    @orders = Order.all
+    @orders = Order.where(pizza_id: params[:pizza_id])
     json_response(@orders)
   end
 
@@ -18,7 +18,7 @@ class OrdersController < ApplicationController
 
   # /post(buy a pizza)
   def create
-    @order = Order.create!(order_params)
+    @order = Order.where(user_id: @user.id).create!(order_params)
     json_response(@order, :created)
   end
 
@@ -45,10 +45,11 @@ class OrdersController < ApplicationController
   end
 
   def set_pizza
-    @pizza = @user.pizzas.find_by!(id: params[:id]) if @user
+    @pizza = Pizza.find_by!(params[:pizza_id])
   end
 
   def set_user
-    @user = User.find_by!(params[:user_id])
+    token = AuthToken.decode(request.headers['Authorization'].split(' ').last)
+    @user = User.find_by!(id: token.values[0])
   end
 end
