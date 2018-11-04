@@ -5,7 +5,8 @@ class Users::SessionsController < Devise::SessionsController
   # POST /resource/sign_in
   def create
     user = User.where(email: params[:email]).first
-    token = JWT.encode({ user_id: user.id, email: user.email }, 'ewihufiuweghfuiew')
+    token = JWT.encode(
+      { user_id: user.id, email: user.email, role: user.roles }, 'ewihufiuweghfuiew')
     render json: { user: user.email, token: token }, status: :created
   end
 end

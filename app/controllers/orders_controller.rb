@@ -3,10 +3,16 @@ class OrdersController < ApplicationController
   before_action :set_user, except: %I[index]
   before_action :set_pizza, except: %I[index]
   before_action :set_order, only: %i[show update destroy]
+  before_action :ensure_admin!, except: %i[index show user_orders]
 
-  # /get
+  # /admin get all orders
   def index
-    @orders = Order.where(pizza_id: params[:pizza_id])
+    @orders = Order.all
+    json_response(@orders)
+  end
+
+  def user_orders
+    @orders = Order.where(user_id: @user.id)
     json_response(@orders)
   end
 
@@ -50,6 +56,6 @@ class OrdersController < ApplicationController
 
   def set_user
     token = AuthToken.decode(request.headers['Authorization'].split(' ').last)
-    @user = User.find_by!(id: token.values[0])
+    @user = User.find_by!(id: token.first.values[0])
   end
 end

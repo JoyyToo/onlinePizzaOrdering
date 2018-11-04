@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   get 'pizzas', to: 'categories#all_pizzas'
 
   get 'orders', to: 'orders#index'
+  get 'user_orders', to: 'orders#user_orders'
   put 'orders/:id', to: 'orders#update'
 
   get 'feedback', to: 'feedbacks#index'

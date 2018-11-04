@@ -2,6 +2,7 @@ class PizzasController < ApplicationController
   before_action :set_category
   before_action :set_pizza, only: %i[show update destroy]
   before_action :verify_jwt_token, except: %i[index]
+  before_action :ensure_admin!, except: %i[index show]
 
   # /get
   def index

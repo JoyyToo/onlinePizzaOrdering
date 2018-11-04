@@ -16,7 +16,7 @@ class Message
   end
 
   def self.unauthorized
-    'Unauthorized request'
+    'You are not Authorized here'
   end
 
   def self.account_not_created

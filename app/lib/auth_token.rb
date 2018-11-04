@@ -8,9 +8,13 @@ module AuthToken
     JWT.encode(payload, "ewihufiuweghfuiew")
   end
 
+  def AuthToken.decode(token)
+    JWT.decode(token, "ewihufiuweghfuiew", false)
+  end
+
   def AuthToken.valid?(token)
     begin
-      JWT.decode(token, "ewihufiuweghfuiew")
+      JWT.decode(token, "ewihufiuweghfuiew", false)
     rescue
       false
     end

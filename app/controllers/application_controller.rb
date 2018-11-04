@@ -11,4 +11,12 @@ class ApplicationController < ActionController::API
       json_response(Message.missing_token.to_json, :unauthorized)
     end
   end
+
+  def ensure_admin!
+    token = AuthToken.decode(request.headers['Authorization'].split(' ').last)
+    role = token.first.values[2]
+    unless role == 'admin'
+      json_response(Message: Message.unauthorized)
+    end
+  end
 end

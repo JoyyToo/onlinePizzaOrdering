@@ -10,9 +10,10 @@ class User < ApplicationRecord
 
   validates_presence_of :email, :username, :password
 
-  # def self.from_token_payload(payload)
-  #   find payload["sub"]
-  #   byebug
-  # end
+  before_save :default_values
+
+  def default_values
+    self.roles = 'user' if self.roles.nil?
+  end
 
 end

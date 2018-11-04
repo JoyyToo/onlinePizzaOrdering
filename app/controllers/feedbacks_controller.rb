@@ -2,6 +2,7 @@ class FeedbacksController < ApplicationController
   before_action :verify_jwt_token
 
   before_action :set_user, only: [:create]
+  before_action :ensure_admin!, except: %i[create]
 
   def index
     @feedbacks = Feedback.all
