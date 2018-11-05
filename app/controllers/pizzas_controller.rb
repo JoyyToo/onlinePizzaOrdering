@@ -17,20 +17,24 @@ class PizzasController < ApplicationController
 
   # /post
   def create
-    @pizza = Pizza.create!(pizza_params)
-    json_response(@pizza, :created)
+    @pizza = Pizza.create(pizza_params)
+    if @pizza.valid?
+      json_response(@pizza, :created)
+    else
+      json_response(@pizza.errors.messages, :bad_request)
+    end
   end
 
   # /put
   def update
     @pizza.update!(pizza_params)
-    json_response(Message.updated.to_json)
+    json_response({ Message: Message.updated }, :ok)
   end
 
   # /delete
   def destroy
     @pizza.destroy
-    json_response(Message.deleted.to_json)
+    json_response({ Message: Message.deleted }, :ok)
   end
 
   private
@@ -44,6 +48,12 @@ class PizzasController < ApplicationController
   end
 
   def set_pizza
-    @pizza = @category.pizzas.find_by!(id: params[:id]) if @category
+    @pizza = @category.pizzas.find_by(id: params[:id]) if @category
+    byebug
+    if !@pizza
+      json_response({ Message: Message.not_found }, :not_found)
+    else
+      @pizza
+    end
   end
 end
