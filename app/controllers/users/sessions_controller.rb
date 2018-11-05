@@ -5,8 +5,14 @@ class Users::SessionsController < Devise::SessionsController
   # POST /resource/sign_in
   def create
     user = User.where(email: params[:email]).first
-    token = JWT.encode(
-      { user_id: user.id, email: user.email, role: user.roles }, 'ewihufiuweghfuiew')
-    render json: { user: user.email, token: token }, status: :created
+    if user&.valid_password?(params[:password])
+      token = JWT.encode(
+        { user_id: user.id, email: user.email, role: user.roles }, 'ewihufiuweghfuiew')
+      json_response({ email: user.email,
+                      username: user.username,
+                      user_id: user.id, token: token }, :created)
+    else
+      json_response({ Message: Message.invalid_credentials }, :bad_request)
+    end
   end
 end

@@ -7,6 +7,10 @@ class Message
     'Invalid credentials'
   end
 
+  def self.no_email
+    'Please add valid email'
+  end
+
   def self.invalid_token
     'Invalid token'
   end

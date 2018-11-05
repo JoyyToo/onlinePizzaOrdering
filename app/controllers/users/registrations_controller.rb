@@ -4,9 +4,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
-    @user = User.create!(register_params)
-    if @user.save
+    @user = User.create(register_params)
+    if @user.valid?
       json_response(@user)
+    else
+      json_response(@user.errors.messages, :bad_request)
     end
   end
 
