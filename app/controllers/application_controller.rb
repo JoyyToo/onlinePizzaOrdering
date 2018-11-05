@@ -8,7 +8,7 @@ class ApplicationController < ActionController::API
     if request.headers['Authorization'].nil? || !AuthToken.valid?(
       request.headers['Authorization'].split(' ').last
     )
-      json_response(Message.missing_token.to_json, :unauthorized)
+      json_response({ Message: Message.missing_token }, :unauthorized)
     end
   end
 
@@ -16,7 +16,7 @@ class ApplicationController < ActionController::API
     token = AuthToken.decode(request.headers['Authorization'].split(' ').last)
     role = token.first.values[2]
     unless role == 'admin'
-      json_response(Message: Message.unauthorized)
+      json_response({ Message: Message.unauthorized }, :unauthorized)
     end
   end
 end

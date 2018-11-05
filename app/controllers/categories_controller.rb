@@ -19,13 +19,17 @@ class CategoriesController < ApplicationController
   end
 
   def create
-    @category = Category.create!(category_params)
-    json_response(@category, :created)
+    @category = Category.create(category_params)
+    if @category.valid?
+      json_response(@category, :created)
+    else
+      json_response(@category.errors.messages, :bad_request)
+    end
   end
 
   def destroy
     @category.destroy
-    json_response(Message.deleted.to_json)
+    json_response({ Message: Message.deleted }, :ok)
   end
 
   private
@@ -35,6 +39,11 @@ class CategoriesController < ApplicationController
   end
 
   def set_category
-    @category = Category.find(params[:id])
+    @category = Category.find_by(id: params[:id])
+    if !@category
+      json_response({ Message: Message.not_found }, :not_found)
+    else
+      @category
+    end
   end
 end
