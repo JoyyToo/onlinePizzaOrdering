@@ -10,9 +10,12 @@ class FeedbacksController < ApplicationController
   end
 
   def create
-    @feedback = Feedback.create!(feedback_params)
-    response = { message: Message.feedback_submitted }
-    json_response(response, :created)
+    @feedback = Feedback.where(user_id: @user.id).create(feedback_params)
+    if @feedback.valid?
+      json_response({ message: Message.feedback_submitted }, :created)
+    else
+      json_response(@feedback.errors.messages, :bad_request)
+    end
   end
 
   private
@@ -22,6 +25,12 @@ class FeedbacksController < ApplicationController
   end
 
   def set_user
-    @user = User.find(params[:user_id])
+    token = AuthToken.decode(request.headers['Authorization'].split(' ').last)
+    @user = User.find_by(id: token.first.values[0])
+    if !@user
+      json_response({ Message: Message.not_found }, :not_found)
+    else
+      @user
+    end
   end
 end
