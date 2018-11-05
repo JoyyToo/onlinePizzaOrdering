@@ -49,7 +49,6 @@ class PizzasController < ApplicationController
 
   def set_pizza
     @pizza = @category.pizzas.find_by(id: params[:id]) if @category
-    byebug
     if !@pizza
       json_response({ Message: Message.not_found }, :not_found)
     else

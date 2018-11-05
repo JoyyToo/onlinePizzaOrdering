@@ -13,7 +13,7 @@ class User < ApplicationRecord
   before_save :default_values
 
   def default_values
-    self.roles = 'user' if self.roles.nil?
+    self.roles = 'user' if roles.nil?
   end
 
 end
