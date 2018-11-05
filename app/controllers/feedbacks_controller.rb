@@ -1,6 +1,5 @@
 class FeedbacksController < ApplicationController
   before_action :verify_jwt_token
-
   before_action :set_user, only: [:create]
   before_action :ensure_admin!, except: %i[create]
 
@@ -22,15 +21,5 @@ class FeedbacksController < ApplicationController
 
   def feedback_params
     params.permit(:comment, :user_id)
-  end
-
-  def set_user
-    token = AuthToken.decode(request.headers['Authorization'].split(' ').last)
-    @user = User.find_by(id: token.first.values[0])
-    if !@user
-      json_response({ Message: Message.not_found }, :not_found)
-    else
-      @user
-    end
   end
 end

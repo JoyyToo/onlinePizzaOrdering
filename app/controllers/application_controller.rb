@@ -3,4 +3,5 @@ class ApplicationController < ActionController::API
   include Response
   include JwtToken
   include EnsureAdmin
+  include SetUser
 end
