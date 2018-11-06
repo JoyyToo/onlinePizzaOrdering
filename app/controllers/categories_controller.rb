@@ -1,5 +1,5 @@
 class CategoriesController < ApplicationController
-  before_action :set_category, only: %i[show destroy]
+  before_action :set_category, only: %i[show destroy update]
   before_action :verify_jwt_token, except: %i[all_pizzas index]
   before_action :ensure_admin!, except: %i[all_pizzas index show]
 
@@ -25,6 +25,11 @@ class CategoriesController < ApplicationController
     else
       json_response(@category.errors.messages, :bad_request)
     end
+  end
+
+  def update
+    @category.update!(category_params)
+    json_response({ Message: Message.updated }, :ok)
   end
 
   def destroy
