@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CategoriesController < ApplicationController
   before_action :set_category, only: %i[show destroy update]
   before_action :verify_jwt_token, except: %i[all_pizzas index]
@@ -10,23 +12,31 @@ class CategoriesController < ApplicationController
 
   # /home
   def all_pizzas
-    unless params[:per_page]
-      params[:per_page] = 10
-    end
+    params[:per_page] = 10 unless params[:per_page]
 
-    unless params[:page]
-      params[:page] = 1
-    end
+    params[:page] = 1 unless params[:page]
 
     @pizzas = Pizza.all.paginate(
       page: params[:page], per_page: params[:per_page]
     )
+
+    @all_pizza = []
+    @pizzas.each do |pizza|
+      @all_pizza << {
+        id: pizza.id,
+        name: pizza.name,
+        price: pizza.price,
+        ingredients: pizza.ingredients,
+        category: get_category(Category.find(pizza.category_id))
+      }
+    end
+
     json_response(meta: {
                     page: params[:page].to_f,
                     limit: params[:per_page].to_f,
                     total_pages: (@pizzas.count.to_f / params[:per_page].to_f).ceil
                   },
-                  data: @pizzas)
+                  data: @all_pizza)
   end
 
   def show
@@ -65,5 +75,12 @@ class CategoriesController < ApplicationController
     else
       @category
     end
+  end
+
+  def get_category(category)
+    {
+        id: category.id,
+        name: category.name
+    }
   end
 end

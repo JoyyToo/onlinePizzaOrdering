@@ -18,14 +18,29 @@ class PizzasController < ApplicationController
     @pizzas = Pizza.where(category_id: params[:category_id]).paginate(
       page: params[:page], per_page: params[:per_page]
     )
-    # @pizzas.first = @pizzas.find_by!(id: params[:category_id]).name
-    # @pizza_category = @pizzas.find_by!(id: params[:category_id]).name
+
+    @pizza_category = @pizzas.find_by!(params[:category_id]).category.name
+
+    @all_pizza = []
+    @pizzas.each do |pizza|
+      @all_pizza << {
+          id: pizza.id,
+          name: pizza.name,
+          price: pizza.price,
+          ingredients: pizza.ingredients,
+          category: {
+            id: pizza.category_id,
+            category_name: @pizza_category
+          }
+      }
+    end
+
     json_response(meta: {
                     page: params[:page].to_f,
                     limit: params[:per_page].to_f,
                     total_pages: (@pizzas.count.to_f / params[:per_page].to_f).ceil
                   },
-                  data: @pizzas)
+                  data: @all_pizza)
   end
 
   # /get/#id
