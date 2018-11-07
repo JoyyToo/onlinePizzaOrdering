@@ -10,7 +10,7 @@ class CategoriesController < ApplicationController
 
   # /home
   def all_pizzas
-    @pizzas = Pizza.all
+    @pizzas = Pizza.all.paginate(page: params[:page], per_page: 10)
     json_response(@pizzas)
   end
 

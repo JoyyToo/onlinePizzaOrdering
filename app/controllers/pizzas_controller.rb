@@ -6,7 +6,7 @@ class PizzasController < ApplicationController
 
   # /get
   def index
-    @pizzas = Pizza.where(category_id: params[:category_id])
+    @pizzas = Pizza.where(category_id: params[:category_id]).paginate(page: params[:page], per_page: 10)
     json_response(@pizzas)
   end
 
