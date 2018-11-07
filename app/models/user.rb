@@ -8,7 +8,7 @@ class User < ApplicationRecord
 
   alias_method :authenticate, :valid_password?
 
-  validates_presence_of :email, :username, :password
+  validates_presence_of :email, :username
 
   before_save :default_values
 

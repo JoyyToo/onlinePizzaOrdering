@@ -21,5 +21,7 @@ Rails.application.routes.draw do
 
   get 'cart', to: 'cart#index'
 
+  post 'create_admin', to: 'admin#create_admin'
+
   root to: 'categories#all_pizzas'
 end

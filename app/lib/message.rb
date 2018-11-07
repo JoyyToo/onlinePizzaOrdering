@@ -42,4 +42,8 @@ class Message
   def self.updated
     'Successfully updated'
   end
+
+  def self.new_admin
+    'User is now an admin'
+  end
 end
