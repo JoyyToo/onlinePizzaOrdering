@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class PizzasController < ApplicationController
   before_action :set_category
   before_action :set_pizza, only: %i[show update destroy]
@@ -6,8 +7,25 @@ class PizzasController < ApplicationController
 
   # /get
   def index
-    @pizzas = Pizza.where(category_id: params[:category_id]).paginate(page: params[:page], per_page: 10)
-    json_response(@pizzas)
+    unless params[:per_page]
+      params[:per_page] = 10
+    end
+
+    unless params[:page]
+      params[:page] = 1
+    end
+
+    @pizzas = Pizza.where(category_id: params[:category_id]).paginate(
+      page: params[:page], per_page: params[:per_page]
+    )
+    # @pizzas.first = @pizzas.find_by!(id: params[:category_id]).name
+    # @pizza_category = @pizzas.find_by!(id: params[:category_id]).name
+    json_response(meta: {
+                    page: params[:page].to_f,
+                    limit: params[:per_page].to_f,
+                    total_pages: (@pizzas.count.to_f / params[:per_page].to_f).ceil
+                  },
+                  data: @pizzas)
   end
 
   # /get/#id

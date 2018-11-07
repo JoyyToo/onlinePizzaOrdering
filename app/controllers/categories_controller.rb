@@ -10,8 +10,23 @@ class CategoriesController < ApplicationController
 
   # /home
   def all_pizzas
-    @pizzas = Pizza.all.paginate(page: params[:page], per_page: 10)
-    json_response(@pizzas)
+    unless params[:per_page]
+      params[:per_page] = 10
+    end
+
+    unless params[:page]
+      params[:page] = 1
+    end
+
+    @pizzas = Pizza.all.paginate(
+      page: params[:page], per_page: params[:per_page]
+    )
+    json_response(meta: {
+                    page: params[:page].to_f,
+                    limit: params[:per_page].to_f,
+                    total_pages: (@pizzas.count.to_f / params[:per_page].to_f).ceil
+                  },
+                  data: @pizzas)
   end
 
   def show
