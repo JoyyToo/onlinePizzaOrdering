@@ -28,6 +28,7 @@ class PizzasController < ApplicationController
           name: pizza.name,
           price: pizza.price,
           ingredients: pizza.ingredients,
+          image: pizza.image,
           category: {
             id: pizza.category_id,
             category_name: @pizza_category

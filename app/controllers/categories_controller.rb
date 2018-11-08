@@ -27,6 +27,7 @@ class CategoriesController < ApplicationController
         name: pizza.name,
         price: pizza.price,
         ingredients: pizza.ingredients,
+        image: pizza.image,
         category: get_category(Category.find(pizza.category_id))
       }
     end
