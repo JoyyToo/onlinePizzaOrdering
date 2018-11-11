@@ -14,13 +14,22 @@ class CartController < ApplicationController
           pizza: @pizza
       }
     end
-    json_response(@mycart)
+    if @mycart.count >= 1
+      json_response(@mycart)
+    else
+      json_response(Message: Message.no_data)
+    end
   end
 
   # add to cart
   def create
     @cart = Cart.where(user_id: @user.id).create!(cart_params)
     json_response(@cart, :created)
+  end
+
+  def destroy
+    @cart.destroy
+    json_response({ Message: Message.deleted }, :ok)
   end
 
   private
