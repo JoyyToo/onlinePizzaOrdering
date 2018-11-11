@@ -1,19 +1,22 @@
 class CartController < ApplicationController
   before_action :set_user
   before_action :verify_jwt_token
+  before_action :set_cart, only: %i[destroy show]
+  before_action :set_pizza, only: %i[create]
 
   def index
     @carts = Cart.where(user_id: @user.id)
-    @pizza = Pizza.where(id: params[:pizza_id])
 
     @mycart = []
     @carts.each do |cart|
       @mycart << {
           id: cart.id,
           user_id: cart.user_id,
-          pizza: @pizza
+          pizza_id: cart.pizza_id,
+          pizza: get_pizza(Pizza.find(cart.pizza_id))
       }
     end
+
     if @mycart.count >= 1
       json_response(@mycart)
     else
@@ -23,8 +26,12 @@ class CartController < ApplicationController
 
   # add to cart
   def create
-    @cart = Cart.where(user_id: @user.id).create!(cart_params)
+    @cart = Cart.where(user_id: @user.id, pizza_id: params[:id]).create!(cart_params)
     json_response(@cart, :created)
+  end
+
+  def show
+    json_response(@cart)
   end
 
   def destroy
@@ -36,5 +43,27 @@ class CartController < ApplicationController
 
   def cart_params
     params.permit(:pizza_id, :user_id)
+  end
+
+  def set_cart
+    @cart = Cart.find_by(id: params[:id])
+    if !@cart
+      json_response({ Message: Message.not_found }, :not_found)
+    else
+      @cart
+    end
+  end
+
+  def set_pizza
+    @pizza = Pizza.find_by(params[:id])
+    if !@pizza
+      json_response({ Message: 'Pizza not found' }, :not_found)
+    else
+      @pizza
+    end
+  end
+
+  def get_pizza(pizza)
+    pizza
   end
 end

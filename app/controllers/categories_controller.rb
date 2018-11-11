@@ -40,7 +40,7 @@ class CategoriesController < ApplicationController
                     },
                     data: @all_pizza)
     else
-      json_response(Message: Message.no_data)
+      json_response({ Message: Message.no_data }, :not_found)
     end
   end
 

@@ -20,6 +20,9 @@ Rails.application.routes.draw do
   post 'feedback', to: 'feedbacks#create'
 
   get 'cart', to: 'cart#index'
+  get 'cart/:id', to: 'cart#show'
+  delete 'cart/:id', to: 'cart#destroy'
+  post 'pizzas/:id/cart', to: 'cart#create'
 
   post 'create_admin', to: 'admin#create_admin'
 
