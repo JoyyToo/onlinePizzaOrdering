@@ -46,4 +46,8 @@ class Message
   def self.new_admin
     'User is now an admin'
   end
+
+  def self.no_data
+    'Sorry, there is no data here'
+  end
 end

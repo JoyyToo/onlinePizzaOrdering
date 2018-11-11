@@ -19,8 +19,6 @@ class PizzasController < ApplicationController
       page: params[:page], per_page: params[:per_page]
     )
 
-    @pizza_category = @pizzas.find_by!(params[:category_id]).category.name
-
     @all_pizza = []
     @pizzas.each do |pizza|
       @all_pizza << {
@@ -31,17 +29,21 @@ class PizzasController < ApplicationController
           image: pizza.image,
           category: {
             id: pizza.category_id,
-            category_name: @pizza_category
+            category_name: @pizzas.find_by!(params[:category_id]).category.name
           }
       }
     end
 
-    json_response(meta: {
-                    page: params[:page].to_f,
-                    limit: params[:per_page].to_f,
-                    total_pages: (@pizzas.count.to_f / params[:per_page].to_f).ceil
-                  },
-                  data: @all_pizza)
+    if @all_pizza.count >= 1
+      json_response(meta: {
+                      page: params[:page].to_f,
+                      limit: params[:per_page].to_f,
+                      total_pages: (@pizzas.count.to_f / params[:per_page].to_f).ceil
+                    },
+                    data: @all_pizza)
+    else
+      json_response(Message: Message.no_data)
+    end
   end
 
   # /get/#id

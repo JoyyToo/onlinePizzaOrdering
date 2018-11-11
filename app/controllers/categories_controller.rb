@@ -32,12 +32,16 @@ class CategoriesController < ApplicationController
       }
     end
 
-    json_response(meta: {
-                    page: params[:page].to_f,
-                    limit: params[:per_page].to_f,
-                    total_pages: (@pizzas.count.to_f / params[:per_page].to_f).ceil
-                  },
-                  data: @all_pizza)
+    if @all_pizza.count >= 1
+      json_response(meta: {
+                      page: params[:page].to_f,
+                      limit: params[:per_page].to_f,
+                      total_pages: (@pizzas.count.to_f / params[:per_page].to_f).ceil
+                    },
+                    data: @all_pizza)
+    else
+      json_response(Message: Message.no_data)
+    end
   end
 
   def show
