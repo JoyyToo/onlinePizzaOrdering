@@ -3,8 +3,8 @@
 require 'jwt'
 
 module AuthToken
-  def AuthToken.issue_token(payload)
-    payload['exp'] = 24.hours.from_now.to_i
+  def AuthToken.issue_token(payload, exp = 30.seconds.from_now)
+    payload[:exp] = exp.to_i
     JWT.encode(payload, "ewihufiuweghfuiew")
   end
 

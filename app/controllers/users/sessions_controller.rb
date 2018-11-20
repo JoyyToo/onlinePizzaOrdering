@@ -1,5 +1,6 @@
 class Users::SessionsController < Devise::SessionsController
   include ActivateAccount
+  include AuthToken
   before_action :account_activated
 
   respond_to :json
@@ -8,8 +9,7 @@ class Users::SessionsController < Devise::SessionsController
   def create
     user = User.where(email: params[:email]).first
     if user&.valid_password?(params[:password])
-      token = JWT.encode(
-        { user_id: user.id, email: user.email, role: user.roles }, 'ewihufiuweghfuiew')
+      token = AuthToken.issue_token(user_id: user.id, email: user.email, role: user.roles)
       json_response({ email: user.email,
                       username: user.username,
                       user_id: user.id, token: token }, :created)
