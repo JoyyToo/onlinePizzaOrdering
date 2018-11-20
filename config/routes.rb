@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   post 'pizzas/:id/cart', to: 'cart#create'
 
   post 'create_admin', to: 'admin#create_admin'
+  post 'change_password', to: 'users#change_password'
 
   root to: 'categories#all_pizzas'
 end
