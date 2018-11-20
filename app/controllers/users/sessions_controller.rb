@@ -1,4 +1,6 @@
 class Users::SessionsController < Devise::SessionsController
+  include ActivateAccount
+  before_action :account_activated
 
   respond_to :json
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_05_093113) do
+ActiveRecord::Schema.define(version: 2018_11_20_095411) do
 
   create_table "carts", force: :cascade do |t|
     t.integer "user_id"
@@ -72,6 +72,8 @@ ActiveRecord::Schema.define(version: 2018_11_05_093113) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "roles"
+    t.boolean "activated", default: false
+    t.datetime "activated_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

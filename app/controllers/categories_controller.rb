@@ -3,6 +3,7 @@
 class CategoriesController < ApplicationController
   before_action :set_category, only: %i[show destroy update]
   before_action :verify_jwt_token, except: %i[all_pizzas index]
+  before_action :account_activated, except: %i[all_pizzas index]
   before_action :ensure_admin!, except: %i[all_pizzas index show]
 
   def index

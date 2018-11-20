@@ -1,5 +1,6 @@
 class OrdersController < ApplicationController
   before_action :verify_jwt_token
+  before_action :account_activated
   before_action :set_user, except: %I[index]
   before_action :set_pizza, except: %I[index]
   before_action :set_order, only: %i[show update destroy]

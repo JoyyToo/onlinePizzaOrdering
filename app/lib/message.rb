@@ -39,6 +39,10 @@ class Message
     'Successfully deleted'
   end
 
+  def self.activated
+    'Account Successfully activated'
+  end
+
   def self.updated
     'Successfully updated'
   end

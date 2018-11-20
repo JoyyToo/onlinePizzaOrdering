@@ -1,6 +1,7 @@
 class AdminController < ApplicationController
   before_action :ensure_admin!, only: [:create_admin]
   before_action :verify_jwt_token, only: [:create_admin]
+  before_action :account_activated
   before_action :admin_params, only: [:create_admin]
   before_action :user
 
