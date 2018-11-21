@@ -33,6 +33,13 @@
           "summary": "Create a single category",
           "parameters": [
             {
+              "paramType": "header",
+              "name": "Authorization",
+              "type": "string",
+              "description": "To authorize the requests.",
+              "required": true
+            },
+            {
               "paramType": "form",
               "name": "name",
               "type": "required",

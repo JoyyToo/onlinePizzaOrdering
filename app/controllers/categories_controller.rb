@@ -29,9 +29,10 @@ class CategoriesController < ApplicationController
 
   swagger_api :create do
     summary 'Create a single category'
+    param :header, :Authorization, :string, :required, 'To authorize the requests.' # to remove
     param :form, :name, :required, :string, 'Name'
     response :unauthorized
-    response :bad_request
+    response :bad_requestg
   end
 
   swagger_api :update do
