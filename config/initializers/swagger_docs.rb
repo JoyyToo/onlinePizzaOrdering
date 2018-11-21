@@ -6,7 +6,7 @@ Swagger::Docs::Config.register_apis('1.0' => {
                                       # the URL base path to your API
                                       base_path: if Rails.env.development?
                                                    'http://localhost:3000'
-                                                 else
+                                                 elsif Rails.env.production?
                                                    'https://thawing-oasis-83740.herokuapp.com'
                                                  end,
 
