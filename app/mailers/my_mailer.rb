@@ -3,6 +3,7 @@ class MyMailer < ActionMailer::Base
 
   def sample_email(user)
     @user = user
+    @token = AuthToken.issue_token(user_id: user.id, email: user.email)
     mail(to: @user.email, subject: 'Account Verification')
   end
 

@@ -6,6 +6,56 @@ class OrdersController < ApplicationController
   before_action :set_order, only: %i[show update destroy]
   before_action :ensure_admin!, except: %i[show user_orders]
 
+  swagger_controller :orders, 'Orders'
+
+  swagger_api :index do
+    summary 'Get orders by all users for admin'
+    response :unauthorized
+    response :bad_request
+    response :not_found
+  end
+
+  swagger_api :user_orders do
+    summary 'Get all orders of a logged in user'
+    response :unauthorized
+    response :bad_request
+    response :not_found
+  end
+
+  swagger_api :show do
+    summary 'Get details of a single order'
+    param :path, :id, :integer, :required, 'Order ID'
+    response :unauthorized
+    response :bad_request
+    response :not_found
+  end
+
+  swagger_api :create do
+    summary 'Make an order'
+    param :path, :user_id, :integer, :required, 'User ID'
+    param :path, :pizza_id, :integer, :required, 'Pizza ID'
+    param :form, :quantity, :integer, :required, 'Quantity'
+    response :unauthorized
+    response :bad_request
+  end
+
+  swagger_api :update do
+    summary 'Update single order'
+    param :path, :id, :integer, :required, 'Order ID'
+    param :form, :status, :string, :required, 'Current status'
+    response :unauthorized
+    response :bad_request
+    response :not_found
+  end
+
+  swagger_api :destroy do
+    summary 'Delete a single order'
+    param :path, :id, :integer, :required, 'Order ID'
+    response :unauthorized
+    response :bad_request
+    response :not_found
+  end
+
   # /admin get all orders
   def index
     @orders = Order.all

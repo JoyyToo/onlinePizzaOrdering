@@ -1,9 +1,18 @@
 class Users::SessionsController < Devise::SessionsController
   include ActivateAccount
   include AuthToken
+  include Swagger::Docs::Methods
   before_action :account_activated
 
   respond_to :json
+  swagger_controller :sessions, 'Login'
+
+  swagger_api :create do
+    summary 'Login'
+    param :form, :email, :string, :required, 'Email address'
+    param :form, :password, :string, :required, 'Password'
+    response :bad_request
+  end
 
   # POST /resource/sign_in
   def create

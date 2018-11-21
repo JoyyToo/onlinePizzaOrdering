@@ -3,6 +3,26 @@ class UsersController < ApplicationController
   before_action :account_activated, only: %i[change_password logout]
   before_action :set_user, only: %i[change_password forgot_password]
 
+  swagger_controller :users, 'Users'
+
+  swagger_api :change_password do
+    summary 'Change Password'
+    param :form, :password, :string, :required, 'New Password'
+    response :unauthorized
+  end
+
+  swagger_api :forgot_password do
+    summary 'Reset Password'
+    param :form, :email, :string, :required, 'User Email'
+    response :bad_request
+  end
+
+  swagger_api :activate_account do
+    summary 'Activate your Account'
+    param :form, :token, :varchar, :required, 'Token in email'
+    response :bad_request
+  end
+
   def change_password
     @myuser = User.find(@user.id)
     @myuser.update!(user_params)
@@ -12,6 +32,22 @@ class UsersController < ApplicationController
   def forgot_password
     MyMailer.forgot_email(@user).deliver
     json_response({ Message: 'Please check the link in your email to reset your password' }, :ok)
+  end
+
+  def activate_account
+    if params[:token] && AuthToken.valid?(params[:token])
+      @token = AuthToken.decode(params[:token])
+      user_id = @token.first.values[0]
+      this_user = User.find(user_id)
+      if this_user.activated?
+        json_response({ Message: 'Account already activated' }, :bad_request)
+      else
+        this_user.update_columns(activated: true, activated_at: Time.zone.now)
+        json_response({ Message: Message.activated }, :ok)
+      end
+    else
+      json_response({ Message: 'Please provide the token sent to your email' }, :bad_request)
+    end
   end
 
   private

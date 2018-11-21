@@ -5,7 +5,6 @@ Rails.application.routes.draw do
   }
   resources :categories do
     resources :pizzas do
-      resources :cart
       resources :orders
     end
   end
@@ -26,7 +25,7 @@ Rails.application.routes.draw do
 
   post 'create_admin', to: 'admin#create_admin'
   post 'change_password', to: 'users#change_password'
-  get 'activate_account', to: 'users#activate_account'
+  post 'activate_account', to: 'users#activate_account'
   post 'forgot_password', to: 'users#forgot_password'
 
   root to: 'categories#all_pizzas'

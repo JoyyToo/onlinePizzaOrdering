@@ -6,6 +6,53 @@ class PizzasController < ApplicationController
   before_action :account_activated, except: %i[index show]
   before_action :ensure_admin!, except: %i[index show]
 
+  swagger_controller :pizzas, 'Pizza'
+
+  swagger_api :index do
+    summary 'Get all available pizzas in category'
+    param :path, :category_id, :integer, :required, 'Category ID'
+    response :unauthorized
+    response :bad_request
+    response :not_found
+  end
+
+  swagger_api :show do
+    summary 'Get details of a single pizza'
+    param :path, :id, :integer, :required, 'Pizza ID'
+    param :path, :category_id, :integer, :required, 'Category ID'
+    response :unauthorized
+    response :bad_request
+    response :not_found
+  end
+
+  swagger_api :create do
+    summary 'Create a new pizza'
+    param :path, :category_id, :integer, :required, 'User ID'
+    param :form, :quantity, :integer, :required, 'Quantity'
+    response :unauthorized
+    response :bad_request
+  end
+
+  swagger_api :update do
+    summary 'Update single pizza status'
+    param :path, :id, :integer, :required, 'Pizza ID'
+    param :path, :category_id, :integer, :required, 'Category ID'
+    param :form, :status, :string, :required, 'Current status'
+    response :unauthorized
+    response :bad_request
+    response :not_found
+  end
+
+  swagger_api :destroy do
+    summary 'Delete a single pizza'
+    param :path, :id, :integer, :required, 'Pizza ID'
+    param :path, :category_id, :integer, :required, 'Category ID'
+    response :unauthorized
+    response :bad_request
+    response :ok
+    response :not_found
+  end
+
   # /get
   def index
     unless params[:per_page]

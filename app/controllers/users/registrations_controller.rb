@@ -1,6 +1,17 @@
 # frozen_string_literal: true
 
 class Users::RegistrationsController < Devise::RegistrationsController
+  include Swagger::Docs::Methods
+
+  swagger_controller :registrations, 'Registration'
+
+  swagger_api :create do
+    summary 'Create a new User'
+    param :form, :username, :string, :required, 'Username'
+    param :form, :email, :string, :required, 'Email address'
+    param :form, :password, :string, :required, 'Password'
+    response :bad_request
+  end
 
   # POST /resource
   def create

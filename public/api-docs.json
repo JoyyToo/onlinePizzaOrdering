@@ -1,0 +1,52 @@
+{
+  "apiVersion": "1.0",
+  "swaggerVersion": "1.2",
+  "basePath": "http://localhost:3000",
+  "apis": [
+    {
+      "path": "/users/sessions.{format}",
+      "description": "Login"
+    },
+    {
+      "path": "/users/registrations.{format}",
+      "description": "Registration"
+    },
+    {
+      "path": "/orders.{format}",
+      "description": "Orders"
+    },
+    {
+      "path": "/pizzas.{format}",
+      "description": "Pizza"
+    },
+    {
+      "path": "/categories.{format}",
+      "description": "Categories"
+    },
+    {
+      "path": "/feedbacks.{format}",
+      "description": "Feedback"
+    },
+    {
+      "path": "/cart.{format}",
+      "description": "Cart"
+    },
+    {
+      "path": "/users.{format}",
+      "description": "Users"
+    }
+  ],
+  "authorizations": null,
+  "info": {
+    "title": "An Online Pizzeria",
+    "description": "Order Pizza and have it at the comfort of your home",
+    "securityDefinitions": {
+      "Bearer": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header"
+      }
+    },
+    "security": "- Bearer: []"
+  }
+}

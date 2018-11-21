@@ -1,0 +1,144 @@
+{
+  "apiVersion": "1.0",
+  "swaggerVersion": "1.2",
+  "basePath": "http://localhost:3000",
+  "resourcePath": "cart",
+  "apis": [
+    {
+      "path": "/cart",
+      "operations": [
+        {
+          "summary": "Get all items in a cart",
+          "responseMessages": [
+            {
+              "code": 400,
+              "responseModel": null,
+              "message": "Bad Request"
+            },
+            {
+              "code": 401,
+              "responseModel": null,
+              "message": "Unauthorized"
+            },
+            {
+              "code": 404,
+              "responseModel": null,
+              "message": "Not Found"
+            }
+          ],
+          "nickname": "Cart#index",
+          "method": "get"
+        }
+      ]
+    },
+    {
+      "path": "/cart/{id}",
+      "operations": [
+        {
+          "summary": "Get single item in a cart",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "id",
+              "type": "integer",
+              "description": "Cart ID",
+              "required": true
+            }
+          ],
+          "responseMessages": [
+            {
+              "code": 400,
+              "responseModel": null,
+              "message": "Bad Request"
+            },
+            {
+              "code": 401,
+              "responseModel": null,
+              "message": "Unauthorized"
+            },
+            {
+              "code": 404,
+              "responseModel": null,
+              "message": "Not Found"
+            }
+          ],
+          "nickname": "Cart#show",
+          "method": "get"
+        }
+      ]
+    },
+    {
+      "path": "/cart/{id}",
+      "operations": [
+        {
+          "summary": "Remove an item from cart",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "id",
+              "type": "integer",
+              "description": "Cart ID",
+              "required": true
+            }
+          ],
+          "responseMessages": [
+            {
+              "code": 400,
+              "responseModel": null,
+              "message": "Bad Request"
+            },
+            {
+              "code": 401,
+              "responseModel": null,
+              "message": "Unauthorized"
+            },
+            {
+              "code": 404,
+              "responseModel": null,
+              "message": "Not Found"
+            }
+          ],
+          "nickname": "Cart#destroy",
+          "method": "delete"
+        }
+      ]
+    },
+    {
+      "path": "/pizzas/{id}/cart",
+      "operations": [
+        {
+          "summary": "Add item to cart",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "id",
+              "type": "required",
+              "description": "Pizza ID",
+              "required": false
+            }
+          ],
+          "responseMessages": [
+            {
+              "code": 400,
+              "responseModel": null,
+              "message": "Bad Request"
+            },
+            {
+              "code": 401,
+              "responseModel": null,
+              "message": "Unauthorized"
+            },
+            {
+              "code": 404,
+              "responseModel": null,
+              "message": "Not Found"
+            }
+          ],
+          "nickname": "Cart#create",
+          "method": "post"
+        }
+      ]
+    }
+  ],
+  "authorizations": null
+}
