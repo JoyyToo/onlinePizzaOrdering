@@ -32,7 +32,7 @@ class CategoriesController < ApplicationController
     param :header, :Authorization, :string, :required, 'To authorize the requests.' # to remove
     param :form, :name, :required, :string, 'Name'
     response :unauthorized
-    response :bad_requestg
+    response :bad_request
   end
 
   swagger_api :update do
