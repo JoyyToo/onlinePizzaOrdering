@@ -6,7 +6,7 @@ Swagger::Docs::Config.register_apis('1.0' => {
                                       # the URL base path to your API
                                       base_path: if Rails.env.development?
                                                    'http://localhost:3000'
-                                                 elsif Rails.env.production?
+                                                 else
                                                    'https://thawing-oasis-83740.herokuapp.com'
                                                  end,
 
@@ -16,15 +16,7 @@ Swagger::Docs::Config.register_apis('1.0' => {
                                       attributes: {
                                         info: {
                                           'title' => 'An Online Pizzeria',
-                                          'description' => 'Order Pizza and have it at the comfort of your home',
-                                          'securityDefinitions' => {
-                                            "Bearer"=> {
-                                              "type"=> 'apiKey',
-                                              "name"=> 'Authorization',
-                                              "in"=> 'header'
-                                            }
-                                          },
-                                          "security": '- Bearer: []'
+                                          'description' => 'Order Pizza and have it at the comfort of your home'
                                         }
                                       }
                                     })

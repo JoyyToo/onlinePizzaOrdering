@@ -39,14 +39,6 @@
   "authorizations": null,
   "info": {
     "title": "An Online Pizzeria",
-    "description": "Order Pizza and have it at the comfort of your home",
-    "securityDefinitions": {
-      "Bearer": {
-        "type": "apiKey",
-        "name": "Authorization",
-        "in": "header"
-      }
-    },
-    "security": "- Bearer: []"
+    "description": "Order Pizza and have it at the comfort of your home"
   }
 }
