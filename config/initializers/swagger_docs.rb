@@ -4,7 +4,7 @@ Swagger::Docs::Config.register_apis('1.0' => {
                                       # the output location where your .json files are written to
                                       api_file_path: 'public',
                                       # the URL base path to your API
-                                      base_path: ENV['base_path'],
+                                      base_path: ENV['ROOT_URL'],
 
                                       # if you want to delete all .json files at each generation
                                       clean_directory: true,
