@@ -1,7 +1,7 @@
 {
   "apiVersion": "1.0",
   "swaggerVersion": "1.2",
-  "basePath": "http://localhost:3000",
+  "basePath": "https://thawing-oasis-83740.herokuapp.com",
   "resourcePath": "pizzas",
   "apis": [
     {
