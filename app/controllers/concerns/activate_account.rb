@@ -1,8 +1,9 @@
 module ActivateAccount
 
   def account_activated
-    user = User.find_by(email: params[:email]).id
-    this_user = User.find(user)
+    token = AuthToken.decode(params[:token])
+    user_id = token.first.values[0]
+    this_user = User.find(user_id)
 
     if this_user.activated?
 
