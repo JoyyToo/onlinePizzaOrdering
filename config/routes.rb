@@ -3,13 +3,12 @@ Rails.application.routes.draw do
     sessions: 'users/sessions',
     registrations: 'users/registrations'
   }
-  resources :categories do
-    resources :pizzas do
-      resources :orders
-    end
+  resources :categories
+  resources :pizzas do
+    resources :orders
   end
 
-  get 'pizzas', to: 'categories#all_pizzas'
+  get 'all_pizzas', to: 'categories#all_pizzas'
 
   get 'orders', to: 'orders#index'
   get 'user_orders', to: 'orders#user_orders'

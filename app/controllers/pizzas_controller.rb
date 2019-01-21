@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class PizzasController < ApplicationController
-  before_action :set_category
+  before_action :set_category, only: %i[create index]
   before_action :set_pizza, only: %i[show update destroy]
   before_action :verify_jwt_token, except: %i[index show]
   before_action :account_activated, except: %i[index show]
@@ -85,7 +85,7 @@ class PizzasController < ApplicationController
   end
 
   def set_pizza
-    @pizza = @category.pizzas.find_by(id: params[:id]) if @category
+    @pizza =  Pizza.find_by(id: params[:id])
     if !@pizza
       json_response({ Message: Message.not_found }, :not_found)
     else
