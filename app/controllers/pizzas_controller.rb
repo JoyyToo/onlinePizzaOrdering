@@ -43,7 +43,7 @@ class PizzasController < ApplicationController
                     },
                     data: @all_pizza)
     else
-      json_response({ Message: Message.no_data }, :not_foun)
+      json_response({ Message: Message.no_data }, :not_found)
     end
   end
 
