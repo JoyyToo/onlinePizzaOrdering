@@ -30,7 +30,8 @@ class OrdersController < ApplicationController
   def create
     @order = Order.where(user_id: @user.id).create(order_params)
     if @order.valid?
-      json_response(@order, :created)
+      @total = @order.quantity * @pizza.price
+      json_response({ Order: @order, 'Your total price is Ksh': @total}, :created)
     else
       json_response(@order.errors.messages, :bad_request)
     end
