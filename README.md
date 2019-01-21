@@ -1,24 +1,29 @@
-# README
+# Online Pizzeria
+This is a Ruby on Rails 5 application that allows users to order pizza at the comfort of their homes.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## External dependencies
+This web application is written with Ruby using the Ruby on Rails framework and a PostgreSQL database
 
-Things you may want to cover:
+## Installation
+Once you have Ruby, Rails and PostgreSQL installed. Take the following steps to install the application:
+ - Run `git clone https://github.com/JoyyToo/onlinePizzaOrdering.git` to clone this repository
 
-* Ruby version
+ - Run `bundle install` to install all required gems
+ 
+## This project uses Postgresql. You will need to install postgres.On a Mac do:
+- Run `brew install postgres`
 
-* System dependencies
+## To create the databases:
+- Run
+   - `rails db:create`
+   
+   - `rails db:migrate`
 
-* Configuration
+## To have sample data in your database:
+- Run `rails db:seed`
 
-* Database creation
+## How to run the test suite
+- Run test with `rspec spec`
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Run the server
+- Run `rails s`
