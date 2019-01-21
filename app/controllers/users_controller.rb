@@ -3,26 +3,6 @@ class UsersController < ApplicationController
   before_action :account_activated, only: %i[change_password logout]
   before_action :set_user, only: %i[change_password forgot_password]
 
-  swagger_controller :users, 'Users'
-
-  swagger_api :change_password do
-    summary 'Change Password'
-    param :form, :password, :string, :required, 'New Password'
-    response :unauthorized
-  end
-
-  swagger_api :forgot_password do
-    summary 'Reset Password'
-    param :form, :email, :string, :required, 'User Email'
-    response :bad_request
-  end
-
-  swagger_api :activate_account do
-    summary 'Activate your Account'
-    param :form, :token, :varchar, :required, 'Token in email'
-    response :bad_request
-  end
-
   def change_password
     @myuser = User.find(@user.id)
     @myuser.update!(user_params)

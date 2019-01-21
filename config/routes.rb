@@ -28,5 +28,5 @@ Rails.application.routes.draw do
   post 'activate_account', to: 'users#activate_account'
   post 'forgot_password', to: 'users#forgot_password'
 
-  get '/' => redirect('/api/index.html')
+  get '/' => redirect('/categories')
 end

@@ -5,5 +5,4 @@ class ApplicationController < ActionController::API
   include EnsureAdmin
   include SetUser
   include ActivateAccount
-  include Swagger::Docs::Methods
 end

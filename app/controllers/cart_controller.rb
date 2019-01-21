@@ -5,39 +5,6 @@ class CartController < ApplicationController
   before_action :set_cart, only: %i[destroy show]
   before_action :set_pizza, only: %i[create]
 
-  swagger_controller :cart, 'Cart'
-
-  swagger_api :index do
-    summary 'Get all items in a cart'
-    response :unauthorized
-    response :bad_request
-    response :not_found
-  end
-
-  swagger_api :show do
-    summary 'Get single item in a cart'
-    param :path, :id, :integer, :required, 'Cart ID'
-    response :unauthorized
-    response :bad_request
-    response :not_found
-  end
-
-  swagger_api :create do
-    summary 'Add item to cart'
-    param :path, :id, :required, :integer, 'Pizza ID'
-    response :unauthorized
-    response :bad_request
-    response :not_found
-  end
-
-  swagger_api :destroy do
-    summary 'Remove an item from cart'
-    param :path, :id, :integer, :required, 'Cart ID'
-    response :unauthorized
-    response :bad_request
-    response :not_found
-  end
-
   def index
     @carts = Cart.where(user_id: @user.id)
 

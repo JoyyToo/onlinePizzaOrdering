@@ -6,52 +6,6 @@ class CategoriesController < ApplicationController
   before_action :account_activated, except: %i[all_pizzas index]
   before_action :ensure_admin!, except: %i[all_pizzas index show]
 
-  swagger_controller :categories, 'Categories'
-
-  swagger_api :index do
-    summary 'Get all pizza categories'
-    response :bad_request
-    response :not_found
-  end
-
-  swagger_api :all_pizzas do
-    summary 'Get all available pizzas'
-    response :bad_request
-    response :not_found
-  end
-
-  swagger_api :show do
-    summary 'Get single category'
-    param :path, :category_id, :integer, :required, 'Category ID'
-    response :bad_request
-    response :not_found
-  end
-
-  swagger_api :create do
-    summary 'Create a single category'
-    param :header, :Authorization, :string, :required, 'To authorize the requests.' # to remove
-    param :form, :name, :required, :string, 'Name'
-    response :unauthorized
-    response :bad_request
-  end
-
-  swagger_api :update do
-    summary 'Update single category'
-    param :path, :category_id, :integer, :required, 'Category ID'
-    param :form, :name, :string, 'Name'
-    response :unauthorized
-    response :bad_request
-    response :not_found
-  end
-
-  swagger_api :destroy do
-    summary 'Delete a single category'
-    param :path, :category_id, :integer, :required, 'Category ID'
-    response :unauthorized
-    response :bad_request
-    response :not_found
-  end
-
   def index
     @categories = Category.all
     json_response(@categories)

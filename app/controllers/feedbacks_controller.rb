@@ -4,23 +4,6 @@ class FeedbacksController < ApplicationController
   before_action :set_user, only: [:create]
   before_action :ensure_admin!, except: %i[create]
 
-  swagger_controller :feedbacks, 'Feedback'
-
-  swagger_api :index do
-    summary 'Get all feedback given by users'
-    response :unauthorized
-    response :bad_request
-    response :not_found
-  end
-
-  swagger_api :create do
-    summary 'Give feedback'
-    param :path, :user_id, :required, :integer, 'User ID'
-    param :form, :comment, :required, :integer, 'Comment'
-    response :unauthorized
-    response :bad_request
-  end
-
   def index
     @feedbacks = Feedback.all
     json_response(@feedbacks)
