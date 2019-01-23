@@ -3,7 +3,7 @@ module ActivateAccount
   def account_activated
     if request.headers['Authorization']
       token = AuthToken.decode(request.headers['Authorization'].split(' ').last)
-      email = token.first.values[1]
+      email = token.first.values[2]
       user = User.find_by(email: email).id
     else
       user = User.find_by(email: params[:email]).id
