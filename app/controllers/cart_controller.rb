@@ -56,7 +56,7 @@ class CartController < ApplicationController
   end
 
   def set_pizza
-    @pizza = Pizza.find_by(params[:id])
+    @pizza = Pizza.find_by(id: params[:id])
     if !@pizza
       json_response({ Message: 'Pizza not found' }, :not_found)
     else

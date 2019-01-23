@@ -30,7 +30,7 @@ class PizzasController < ApplicationController
           image: pizza.image,
           category: {
             id: pizza.category_id,
-            category_name: @pizzas.find_by!(params[:category_id]).category.name
+            category_name: Category.find_by(id: pizza.category_id).name
           }
       }
     end
@@ -77,7 +77,7 @@ class PizzasController < ApplicationController
   private
 
   def pizza_params
-    params.permit(:price, :name, :ingredients, :category_id, :image)
+    params.permit(:price, :name, :category_id, :image, ingredients: [])
   end
 
   def set_category

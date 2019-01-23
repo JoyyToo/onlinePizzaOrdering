@@ -15,7 +15,6 @@ Rails.application.routes.draw do
 
   get 'orders', to: 'orders#index'
   get 'user_orders', to: 'orders#user_orders'
-  put 'orders/:id', to: 'orders#update'
 
   get 'feedback', to: 'feedbacks#index'
   post 'feedback', to: 'feedbacks#create'
@@ -30,5 +29,5 @@ Rails.application.routes.draw do
   post 'activate_account', to: 'users#activate_account'
   post 'forgot_password', to: 'users#forgot_password'
 
-  get '/' => redirect('/categories')
+  get '/' => redirect('/all_pizzas')
 end

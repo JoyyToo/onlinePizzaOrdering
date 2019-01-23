@@ -3,7 +3,7 @@ class CreatePizzas < ActiveRecord::Migration[5.2]
     create_table :pizzas do |t|
       t.float :price
       t.string :name
-      t.string :ingredients
+      t.jsonb :ingredients, default: [], array: true
       t.string :toppings
       t.references :category, foreign_key: true
 

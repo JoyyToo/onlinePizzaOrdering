@@ -3,8 +3,8 @@
 require 'jwt'
 
 module AuthToken
-  def AuthToken.issue_token(payload, exp = 30.seconds.from_now)
-    payload[:exp] = exp.to_i
+  def AuthToken.issue_token(payload, expiration = 30.seconds.from_now)
+    payload[:exp] = expiration
     JWT.encode(payload, "ewihufiuweghfuiew")
   end
 
@@ -16,7 +16,7 @@ module AuthToken
     begin
       JWT.decode(token, "ewihufiuweghfuiew", false)
     rescue
-      false
+      'FAILED'
     end
   end
 end

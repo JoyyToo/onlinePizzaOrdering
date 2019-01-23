@@ -12,9 +12,12 @@
 
 ActiveRecord::Schema.define(version: 2018_11_20_095411) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "carts", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "pizza_id"
+    t.bigint "user_id"
+    t.bigint "pizza_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["pizza_id"], name: "index_carts_on_pizza_id"
@@ -29,7 +32,7 @@ ActiveRecord::Schema.define(version: 2018_11_20_095411) do
 
   create_table "feedbacks", force: :cascade do |t|
     t.string "comment"
-    t.integer "user_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_feedbacks_on_user_id"
@@ -37,11 +40,11 @@ ActiveRecord::Schema.define(version: 2018_11_20_095411) do
 
   create_table "orders", force: :cascade do |t|
     t.integer "quantity"
-    t.integer "pizza_id"
+    t.bigint "pizza_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "status"
-    t.integer "user_id"
+    t.bigint "user_id"
     t.index ["pizza_id"], name: "index_orders_on_pizza_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
@@ -49,8 +52,8 @@ ActiveRecord::Schema.define(version: 2018_11_20_095411) do
   create_table "pizzas", force: :cascade do |t|
     t.float "price"
     t.string "name"
-    t.string "ingredients"
-    t.integer "category_id"
+    t.jsonb "ingredients", default: [], array: true
+    t.bigint "category_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "image"
@@ -78,4 +81,9 @@ ActiveRecord::Schema.define(version: 2018_11_20_095411) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "carts", "pizzas"
+  add_foreign_key "carts", "users"
+  add_foreign_key "feedbacks", "users"
+  add_foreign_key "orders", "pizzas"
+  add_foreign_key "pizzas", "categories"
 end

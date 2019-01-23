@@ -2,7 +2,7 @@ class OrdersController < ApplicationController
   before_action :verify_jwt_token
   before_action :account_activated
   before_action :set_user, except: %I[index]
-  before_action :set_pizza, except: %I[index]
+  before_action :set_pizza, except: %I[index show update]
   before_action :set_order, only: %i[show update]
   before_action :ensure_admin!, except: %i[show user_orders]
 
@@ -51,7 +51,7 @@ class OrdersController < ApplicationController
   end
 
   def set_order
-    @order = @pizza.orders.find_by(id: params[:id]) if @pizza
+    @order = Order.find_by(id: params[:id])
     if !@order
       json_response({ Message: Message.not_found }, :not_found)
     else
@@ -60,7 +60,7 @@ class OrdersController < ApplicationController
   end
 
   def set_pizza
-    @pizza = Pizza.find_by(params[:pizza_id])
+    @pizza = Pizza.find_by(id: params[:pizza_id])
     if !@pizza
       json_response({ Message: Message.not_found }, :not_found)
     else
