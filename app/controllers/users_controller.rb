@@ -17,7 +17,7 @@ class UsersController < ApplicationController
   def activate_account
     if params[:token] && AuthToken.valid?(params[:token])
       @token = AuthToken.decode(params[:token])
-      user_id = @token.first.values[0]
+      user_id = @token.first.values[1]
       this_user = User.find(user_id)
       if this_user.activated?
         json_response({ Message: 'Account already activated' }, :bad_request)
