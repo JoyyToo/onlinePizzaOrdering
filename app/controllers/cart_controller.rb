@@ -1,7 +1,7 @@
 class CartController < ApplicationController
-  before_action :set_user
   before_action :verify_jwt_token
   before_action :account_activated
+  before_action :set_user
   before_action :set_cart, only: %i[destroy show]
   before_action :set_pizza, only: %i[create]
 
