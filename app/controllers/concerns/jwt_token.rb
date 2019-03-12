@@ -1,4 +1,4 @@
-module JwtToken
+ module JwtToken
   def verify_jwt_token
     if request.headers['Authorization'].nil? ||
        request.headers['Authorization'].split(' ').last.nil?

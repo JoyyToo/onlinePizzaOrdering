@@ -36,12 +36,13 @@ class PizzasController < ApplicationController
     end
 
     if @all_pizza.count >= 1
-      json_response(meta: {
-                      page: params[:page].to_f,
-                      limit: params[:per_page].to_f,
-                      total_pages: (@pizzas.count.to_f / params[:per_page].to_f).ceil
-                    },
-                    data: @all_pizza)
+      json_response(data: @all_pizza)
+      # json_response(meta: {
+      #                 page: params[:page].to_f,
+      #                 limit: params[:per_page].to_f,
+      #                 total_pages: (@pizzas.count.to_f / params[:per_page].to_f).ceil
+      #               },
+      #               data: @all_pizza)
     else
       json_response({ Message: Message.no_data }, :not_found)
     end
@@ -58,14 +59,17 @@ class PizzasController < ApplicationController
     if @pizza.valid?
       json_response(@pizza, :created)
     else
-      json_response(@pizza.errors.messages, :bad_request)
+      json_response(@pizza.errors.full_messages, :bad_request)
     end
   end
 
   # /put
   def update
-    @pizza.update!(pizza_params)
-    json_response({ Message: Message.updated }, :ok)
+    if @pizza.update(pizza_params)
+      json_response({ Message: Message.updated }, :ok)
+    else
+      json_response(@pizza.errors.full_messages, :bad_request)
+    end
   end
 
   # /delete

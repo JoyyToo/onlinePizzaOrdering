@@ -4,7 +4,7 @@ class Pizza < ApplicationRecord
   has_many :carts, dependent: :destroy
 
   validates_presence_of :name, :price, :ingredients
-  validates_uniqueness_of :name
+  validates_uniqueness_of :name, case_sensitive: false
 
   mount_uploader :image, ImageUploader
 end

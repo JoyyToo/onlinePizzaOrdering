@@ -34,12 +34,13 @@ class CategoriesController < ApplicationController
     end
 
     if @all_pizza.count >= 1
-      json_response(meta: {
-                      page: params[:page].to_f,
-                      limit: params[:per_page].to_f,
-                      total_pages: (@pizzas.count.to_f / params[:per_page].to_f).ceil
-                    },
-                    data: @all_pizza)
+      json_response(data: @all_pizza)
+      # json_response(meta: {
+      #                 page: params[:page].to_f,
+      #                 limit: params[:per_page].to_f,
+      #                 total_pages: (@pizzas.count.to_f / params[:per_page].to_f).ceil
+      #               },
+      #               data: @all_pizza)
     else
       json_response({ Message: Message.no_data }, :not_found)
     end
@@ -54,13 +55,16 @@ class CategoriesController < ApplicationController
     if @category.valid?
       json_response(@category, :created)
     else
-      json_response(@category.errors.messages, :bad_request)
+      json_response(@category.errors.full_messages, :bad_request)
     end
   end
 
   def update
-    @category.update!(category_params)
-    json_response({ Message: Message.updated }, :ok)
+    if @category.update(category_params)
+      json_response({ Message: Message.updated }, :ok)
+    else
+      json_response(@category.errors.full_messages, :bad_request)
+    end
   end
 
   def destroy
