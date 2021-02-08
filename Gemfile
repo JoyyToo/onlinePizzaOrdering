@@ -25,7 +25,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'devise', '~> 4.6'
 gem 'jwt', '~> 2.1.1', git: 'https://github.com/progrium/ruby-jwt.git'
 gem 'rack-cors', '~> 1.0', '>= 1.0.2'
-gem 'carrierwave', '~> 1.2', '>= 1.2.3'
+gem 'carrierwave', '~> 1.3'
 gem 'carrierwave-aws', '~> 1.3'
 gem 'mini_magick', '~> 4.9'
 gem 'dotenv-rails', '~> 2.5'
